@@ -1,0 +1,19 @@
+[package]
+name = "jesterd20"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+catppuccin-egui = "4.0.0"
+env_logger = { version = "0.11", default-features = false, features = [
+  "auto-color",
+  "humantime",
+] }
+eframe = "0.25.0"
+egui_extras = "0.25.0"
+fastrand = "2.0.1"
+
+[profile.release]
+lto = true
+opt-level = 3
+strip = true
