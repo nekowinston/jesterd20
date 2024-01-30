@@ -1,10 +1,10 @@
 [package]
 name = "jesterd20"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["nekowinston <hey@winston.sh>"]
 description = "DND stat cruncher"
-repository = "https://github.com/nekowinston/jesterd20.git"
+repository = "https://github.com/nekowinston/jesterd20"
 
 [package.metadata.wix]
 upgrade-guid = "FA7A7C66-D855-4283-9BE5-54DDE5779B00"
@@ -41,6 +41,11 @@ ci = ["github"]
 # The installers to generate for each app
 installers = []
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+targets = [
+  "aarch64-apple-darwin",
+  "x86_64-apple-darwin",
+  "x86_64-unknown-linux-gnu",
+  "x86_64-pc-windows-msvc",
+]
 # Publish jobs to run in CI
 pr-run-mode = "plan"
