@@ -67,17 +67,17 @@ fn calculate(player1: &Player, player2: &Player, dice: i32, loops: i32) -> Vec<i
         let p2_def = p2_roll + player2.def_bonus;
 
         // player 1 attacks
-        match p1_atk.cmp(&p2_def) {
-            std::cmp::Ordering::Less => results.push(-1),
-            std::cmp::Ordering::Equal => results.push(1),
-            std::cmp::Ordering::Greater => results.push(1),
+        if p1_atk > p2_def {
+            results.push(1)
+        } else {
+            results.push(-1)
         }
 
         // player 2 attacks
-        match p2_atk.cmp(&p1_def) {
-            std::cmp::Ordering::Less => results.push(1),
-            std::cmp::Ordering::Equal => results.push(-1),
-            std::cmp::Ordering::Greater => results.push(-1),
+        if p2_atk > p1_def {
+            results.push(-1)
+        } else {
+            results.push(1)
         }
     }
     results
@@ -126,18 +126,18 @@ impl eframe::App for App {
                     for result in self.results.chunks(2) {
                         match result[0] {
                             1 => p1_atk_wins += 1,
-                            -1 => p2_atk_wins += 1,
+                            -1 => p2_def_wins += 1,
                             _ => (),
                         }
                         match result[1] {
                             1 => p1_def_wins += 1,
-                            -1 => p2_def_wins += 1,
+                            -1 => p2_atk_wins += 1,
                             _ => (),
                         }
                     }
 
                     ui.label(format!(
-                        "{} won {}% of the time attacking",
+                        "{} won {:.1}% of the time attacking",
                         &self.player1.name,
                         (p1_atk_wins as f32 / self.loops as f32) * 100.0
                     ));
