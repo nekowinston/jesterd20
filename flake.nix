@@ -50,6 +50,7 @@
                 "rustc"
                 "rustfmt"
               ])
+              pkgs.cargo-dist
             ]
             ++ commonBuildInputs;
           env.RUST_SRC_PATH = "${toolchain.rust-src}/lib/rustlib/src/rust/library";
