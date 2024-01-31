@@ -6,21 +6,14 @@ authors = ["nekowinston <hey@winston.sh>"]
 description = "DND stat cruncher"
 repository = "https://github.com/nekowinston/jesterd20"
 
-[package.metadata.wix]
-upgrade-guid = "FA7A7C66-D855-4283-9BE5-54DDE5779B00"
-path-guid = "4D95AC09-36F9-446E-8117-49BFD496DB64"
-license = false
-eula = false
-
 [dependencies]
 catppuccin-egui = "4.0.0"
-env_logger = { version = "0.11", default-features = false, features = [
-  "auto-color",
-  "humantime",
-] }
 eframe = "0.25.0"
-egui_extras = "0.25.0"
 fastrand = "2.0.1"
+image = { version = "0.24.8", default-features = false, features = ["ico"] }
+
+[target.'cfg(windows)'.build-dependencies]
+winres = "0.1.12"
 
 [profile.release]
 lto = true
