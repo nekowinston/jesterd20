@@ -1,12 +1,27 @@
+#![deny(clippy::pedantic, clippy::perf)]
+#![allow(clippy::cast_precision_loss)]
 // hide console window on Windows in release
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use eframe::egui;
+use eframe::egui::{self, IconData};
+use std::sync::Arc;
 
 fn main() -> Result<(), eframe::Error> {
-    env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
+    let buffer = include_bytes!("../assets/d20.png");
+    let image = image::load_from_memory(buffer)
+        .expect("Image could not be loaded from memory")
+        .into_rgba8();
+    let (width, height) = image.dimensions();
+    let icon = Arc::new(IconData {
+        rgba: image.into_raw(),
+        width,
+        height,
+    });
+
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default().with_inner_size([320.0, 240.0]),
+        viewport: egui::ViewportBuilder::default()
+            .with_icon(icon)
+            .with_inner_size([320.0, 480.0]),
         ..Default::default()
     };
     eframe::run_native("jesterd20", options, Box::new(|_cc| Box::<App>::default()))
@@ -22,7 +37,6 @@ struct App {
     player1: Player,
     player2: Player,
     dice: i32,
-    // last_roll: Option<i32>,
     loops: i32,
     results: Vec<i32>,
 }
@@ -68,16 +82,16 @@ fn calculate(player1: &Player, player2: &Player, dice: i32, loops: i32) -> Vec<i
 
         // player 1 attacks
         if p1_atk > p2_def {
-            results.push(1)
+            results.push(1);
         } else {
-            results.push(-1)
+            results.push(-1);
         }
 
         // player 2 attacks
         if p2_atk > p1_def {
-            results.push(-1)
+            results.push(-1);
         } else {
-            results.push(1)
+            results.push(1);
         }
     }
     results
